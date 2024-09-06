@@ -1,0 +1,78 @@
+/* src/components/LandingPage.css */
+
+/* Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+
+/*globally scope inter*/
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+
+.landing-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;  
+    text-align: center;
+}
+
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1; 
+}
+
+/* typewriter */
+h1 {
+    font-size: 500px;
+    font-weight: 1000;
+    margin-bottom: 40px;
+}
+
+.typewriter {
+    overflow: hidden; 
+    border-right: 3px solid black; 
+    white-space: nowrap; 
+    letter-spacing: 1.5px;
+    animation: typing 1.5s steps(14), blink 0.75s step-end 1;
+}
+
+/* animation */
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+
+@keyframes blink {
+    from, to { border-color: transparent }
+    50% { border-color: black }
+}
+
+
+/* to delete */
+.typewriter::after {
+    content: '';
+    display: inline-block;
+    width: 0;
+    border-right: 0px solid transparent;
+    animation: blink 0.75s step-end 1 forwards;
+    
+}
+.nav-link {
+    font-size: 15px;
+    font-weight: 500;
+    color: #949494;
+    margin-right: 5px;
+    transition: color 0.3s fadeIn 3s;
+    animation-delay: 2s;
+}
+
+.nav-item {
+    list-style-type: none; /* Remove bullets */
+}

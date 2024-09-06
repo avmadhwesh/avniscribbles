@@ -1,0 +1,67 @@
+/* whole page */
+.about-me-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+/* Top panel*/
+.top-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+    opacity: 0;  
+    transform: translateY(20px);  
+    transition: opacity 1s ease-out, transform 1s ease-out;  
+}
+
+.profile-picture-container {
+    flex: 1;
+    display: flex;
+    justify-content: right;
+}
+
+/* Pfp styling*/
+.profile-picture {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+.greeting {
+    flex: 2;
+    text-align: left;
+    padding-left: 50px;
+}
+
+.greeting h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin: 0;
+}
+
+
+.bottom-panel {
+    margin-top: 40px;
+    opacity: 0;  
+    transform: translateY(20px);  
+    transition: opacity 1s ease-out, transform 1s ease-out;  
+}
+
+.bottom-panel p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    color: #555;
+    text-indent: 3%;
+}
+
+
+.fade-in {
+    opacity: 1; 
+    transform: translateY(0); 
+}

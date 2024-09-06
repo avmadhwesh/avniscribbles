@@ -1,0 +1,22 @@
+/* src/components/Navbar.css */
+.nav-link {
+    font-size: 18px;
+    font-weight: 500;
+    color: #f2f3f4;
+    margin-right: 15px;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: #bfd9f5; 
+}
+
+.navbar {
+    width: 100%;
+    padding: 10px 20px;
+}
+
+.navbar-brand {
+    font-weight: 500;
+    font-size: 18px;
+}

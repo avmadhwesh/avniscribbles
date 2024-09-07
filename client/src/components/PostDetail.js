@@ -18,12 +18,17 @@ const PostDetail = () => {
         return <div>Loading...</div>;
     }
 
+    const paragraphs = post.content.split('\n\n');
+
     return (
         <div className="post-detail-container">
             <h1>{post.title}</h1>
             <p className="post-meta">Published on {new Date(post.createdAt).toLocaleDateString()}</p>
+
             <div className="post-content">
-                {post.content}
+                {paragraphs.map((paragraph, index) => (
+                    <p key={index}>{paragraph}</p>
+                ))}
             </div>
         </div>
     );

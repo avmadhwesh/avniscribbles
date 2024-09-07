@@ -2,7 +2,8 @@
 .post-detail-container {
     max-width: 800px;
     margin: 0 auto;
-    padding: 40px;
+    padding: 20px; 
+    /* padding was originally 40 */
 }
 
 .post-detail-container h1 {
@@ -21,3 +22,10 @@
     line-height: 1.6;
     color: #333;
 }
+
+
+.post-content p {
+    margin-bottom: 2em;  /* Space between paragraphs */
+    line-height: 1.6;      /* Increase line height for readability */
+}
+

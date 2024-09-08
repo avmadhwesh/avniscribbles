@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './PostDetail.css';  
 import profileImage from './images/pfp2.jpg';  // pfp authors notes
+import TAGS from '../tags';  // import tags const
 
 const PostDetail = () => {
     const { id } = useParams();  // Fetch post ID
@@ -66,6 +67,22 @@ const PostDetail = () => {
 
     const authorNotes = post.notes ? post.notes.split('\n\n') : [];  // author's notes splitter
     const firstLineOfNotes = authorNotes.length > 0 ? authorNotes[0] : '';
+    const RANDOM_COLORS = ['#5C573E','#A5B452','#C8D96F','#C4F7A1','#9BA7C0','#545F66','#829399','#D0F4EA','#36453B','#596869','#C2C1A5','#A7B0CA','#E8C0917','#CB754B','#97B09B','#E9D4AC'];
+
+
+
+           // tag cleaning utility function; imported from postlist
+           const processTags = (tags) => { 
+            if (!Array.isArray(tags)) return [];  
+            const uniqueTags = [...new Set(tags.filter(tag => tag && tag.trim() !== ''))];  //remove dupes
+            return uniqueTags; 
+        };
+    
+        
+            const getRandomColor = () => {
+                return RANDOM_COLORS[Math.floor(Math.random() * RANDOM_COLORS.length)]; 
+            };
+    
 
     return (
         <div className="post-detail-container">
@@ -75,6 +92,24 @@ const PostDetail = () => {
             <div className="post-content">
                 {renderContent(post)}  {/* content rendering */}
             </div>
+
+            {Array.isArray(post.tags) && (
+                                <div className="tags">
+                                    {processTags(post.tags).map((tag, index) => ( 
+                                    // {post.tags.map((tag, index) => (
+
+                                        <span 
+                                            className="tag" 
+                                            key={index} 
+                                            //style={{ backgroundColor: TAGS[tag]?.color || '#000000' }}  // default tag color assignment
+                                            style={{ backgroundColor: TAGS[tag]?.color || getRandomColor() }}  // tag color assignment
+                                        >
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            )}
+
 
             {/* Author's Notes */}
             {post.notes && (

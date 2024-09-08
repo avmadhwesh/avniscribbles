@@ -50,6 +50,7 @@ const PostList = ({ type }) => {
     }, [type]);
 
 
+
     // Scroll-triggered fade-in effect
     useEffect(() => {
         const postEntries = document.querySelectorAll('.post-entry');
@@ -99,7 +100,9 @@ const PostList = ({ type }) => {
             {/* Right side: posts list*/}
             <div className="post-list-container">
                 <div className="post-list">
-                    {posts.map(post => (
+                {posts.length > 0 ? (  // Check if there are posts
+                    // {posts.map(post => (
+                    posts.map(post => (    
                         <div className="post-entry" key={post._id}>
                             <h3>{post.title || "Untitled"}</h3>
 
@@ -125,7 +128,7 @@ const PostList = ({ type }) => {
                                 : "No content available..."}
                             </p>
 
-                            
+
                             {/* <p>
                             {typeof post.content === 'string' && post.content.trim().length > 0
                                 ? post.content.slice(0, 150) + '...'
@@ -154,7 +157,10 @@ const PostList = ({ type }) => {
 
                             <Link to={`/posts/${post._id}`} className="read-more">Read more</Link>
                         </div>
-                    ))}
+                    )) //}
+                ) : (
+                    <p className="no-posts-message">Nothing to see here yet, sorry!</p>  //NEW
+                )}
                 </div>
             </div>
         </div>

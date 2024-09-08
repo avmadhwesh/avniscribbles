@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom'; //deployment edit: useNavigate added
 import './PostDetail.css';  
 import profileImage from './images/pfp2.jpg';  // pfp authors notes
 import TAGS from '../tags';  // import tags const
 
+const DEPLOYED = process.env.REACT_APP_DEPLOYED === 'true'; //NEW
+
 const PostDetail = () => {
     const { id } = useParams();  // Fetch post ID
+    const navigate = useNavigate();  // ******* NEW: navigate hook to redirect users
     const [post, setPost] = useState(null);
+    const [error, setError] = useState(null); // ******* NEW: for dev posts when devmode off
     const [showNotes, setShowNotes] = useState(false);  // Toggle for authors notes
 
     useEffect(() => {
@@ -16,10 +20,42 @@ const PostDetail = () => {
             .catch(error => console.error('Error fetching post:', error));
     }, [id]);
 
+    // ******* NEW: Handle errors if post is not accessible (for dev posts)
+    useEffect(() => {
+        fetch(`http://localhost:5000/api/posts/post/${id}`)
+            .then(response => {
+                if (response.status === 403) {
+                    throw new Error('This post is not accessible.');
+                }
+                return response.json();
+            })
+
+            //NEW
+            .then(data => {
+                // ***** If the post is a dev post and app is deployed, block access
+                if (DEPLOYED && data.dev) {
+                    setError('This post is not accessible in deployment mode.');
+                    // navigate('/');  // Redirect to the home page
+                    navigate('/post-unavailable');  // Navigate to the new page
+                } else {
+                    setPost(data);  // Load post data
+                }
+            })
+            // .then(data => setPost(data))
+            .catch(error => {
+                console.error('Error fetching post:', error); //NEW
+                setError(error.message);  // ******* Error message for inaccessible post
+                // navigate('/');  // ******* Redirect if the post is inaccessible
+            });
+    }, [id, navigate]);
+
+    if (error) {  // ******* Display error message if the post is not accessible
+        return <div>{error}</div>;
+    }
+
     if (!post) {
         return <div>Loading...</div>;  
     }
-
     //render contents
     const renderContent = (post) => {
 

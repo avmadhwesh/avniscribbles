@@ -7,6 +7,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer'; 
 import PostDetail from './components/PostDetail';
 import AboutMe from './components/AboutMe';
+import PostUnavailable from './components/PostUnavailable';
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                 {/*other routes*/}
                 <Route path="/posts/:id" element={<PostDetail />} />
                 <Route path="/aboutme" element={<AboutMe/>} />
+                <Route path="/post-unavailable" element={<PostUnavailable />} />
             </Routes>
             <Footer />
         </Router>

@@ -118,3 +118,14 @@
 }
 
 
+.no-posts-message {
+    font-size: 18px;
+    color: #888;
+    text-align: left;
+    margin-top: 20px;
+    margin-left:10px;
+    font-style: italic;
+}
+
+
+

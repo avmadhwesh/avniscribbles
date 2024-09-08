@@ -40,6 +40,21 @@ const PostDetail = () => {
                         </div>
                     );
                 }
+                if (block.type == 'embed-link' && block.link && block.text) {
+                    return (
+                        <span key={index}>
+                        <a href={block.link} target="_blank" rel="noopener noreferrer">
+                            {block.text}
+                        </a>
+                        </span>
+                    )
+                    
+                }
+                if (block.type == 'raw-text') {
+                    return (
+                        <span key={index}>{block.text}</span>
+                    );
+                }
                 return null;  // Skip unsupported block types
             });
         }

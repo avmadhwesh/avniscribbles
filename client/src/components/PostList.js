@@ -42,6 +42,7 @@ const PostList = ({ type }) => {
             .then((data) => {
                 // if DEPLOYED is true, filter out posts marked as DEV
                 const filteredPosts = DEPLOYED ? data.filter(post => !post.dev) : data;
+
                 setPosts(filteredPosts);
             })
             .catch((error) => {
@@ -106,13 +107,18 @@ const PostList = ({ type }) => {
                         <div className="post-entry" key={post._id}>
                             <h3>{post.title || "Untitled"}</h3>
 
-                            {/* ERRORING <p>{post.content.slice(0, 150) || "No content available..."}</p> */}
-                            {/* <p>{typeof post.content === 'string' ? post.content.slice(0, 150) + '...' : "No content available..."}</p> */}
+
+                                {/* originally type p not div */}
+                                <div className="post-date">
+                                    {post.createdAt ? new Date(post.createdAt).toLocaleDateString() : 'Unknown date'}
+                                </div>
+
+
 
 
                             {/* TO REFACTOR! */}
 
-
+                            {/* originally type p not div */}
                             <p>
                             {typeof post.content === 'string' && post.content.trim().length > 0
                                 ? post.content.length > 150

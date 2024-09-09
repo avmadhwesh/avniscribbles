@@ -6,6 +6,39 @@ import TAGS from '../tags';  // import tags const
 
 const DEPLOYED = process.env.REACT_APP_DEPLOYED === 'true'; //NEW
 
+
+//style helper function
+// Helper function to apply styles based on the 'style' field
+const applyTextStyles = (styleString) => {
+    const styles = {};
+
+    // Split the style string by commas and apply corresponding styles
+    if (!styleString) return styles;
+    
+    const styleArray = styleString.split(',');
+    
+    styleArray.forEach(style => {
+        switch (style.trim()) {
+            case 'italic':
+                styles.fontStyle = 'italic';
+                break;
+            case 'bold':
+                styles.fontWeight = 'bold';
+                break;
+            case 'underline':
+                styles.textDecoration = 'underline';
+                break;
+            default:
+                break;
+        }
+    });
+
+    return styles;
+};
+
+
+
+
 const PostDetail = () => {
     const { id } = useParams();  // Fetch post ID
     const navigate = useNavigate();  // ******* NEW: navigate hook to redirect users
@@ -63,11 +96,24 @@ const PostDetail = () => {
         if (Array.isArray(post.fcontent)) {
             return post.fcontent.map((block, index) => {
                 if (block.type === 'paragraph') {
-                    const paragraphs = block.text.split('\n\n'); //test
-                    return paragraphs.map((paragraphs, i) => (
-                        <p key={`${index}-${i}`}>{paragraphs}</p>  // para render
-                    ));
-                }
+                //     const paragraphs = block.text.split('\n\n'); //test
+                //     return paragraphs.map((paragraphs, i) => (
+                //         <p key={`${index}-${i}`}>{paragraphs}</p>  // para render
+                //     ));
+                // }
+                // Split paragraphs by \n\n and handle \n as a line break
+                const paragraphs = block.text.split('\n\n'); // Paragraphs
+                return paragraphs.map((paragraph, i) => (
+                    <p key={`${index}-${i}`}>
+                        {paragraph.split('\n').map((line, j) => (
+                            <React.Fragment key={`${index}-${i}-${j}`}>
+                                {line}
+                                {j < paragraph.split('\n').length - 1 && <br />} {/* Add line break for \n */}
+                            </React.Fragment>
+                        ))}
+                    </p>
+                ));
+            }
                 if (block.type === 'image' && getImage(block.url)) {
                     return (
                         <div key={index} className="post-image-container">
@@ -87,8 +133,26 @@ const PostDetail = () => {
                     
                 }
                 if (block.type == 'raw-text') {
+                    // return (
+                    //     <span key={index}>{block.text}</span>
+                    // );
                     return (
-                        <span key={index}>{block.text}</span>
+                        <span key={index}>
+                            {block.text.split('\n').map((line, j) => (
+                                <React.Fragment key={`${index}-${j}`}>
+                                    {line}
+                                    {j < block.text.split('\n').length - 1 && <br />} {/* Add line break for single \n */}
+                                </React.Fragment>
+                            ))}
+                        </span>
+                    );
+                }
+                if (block.type === 'ftext') {
+                    const styles = applyTextStyles(block.style);  // Apply styles based on the style field
+                    return (
+                        <span key={index} style={styles}>
+                            {block.text}
+                        </span>
                     );
                 }
                 return null;  // Skip unsupported block types
@@ -96,10 +160,24 @@ const PostDetail = () => {
         }
 
         // DEFAULT: handle field "content" (type string)
+        // if (typeof post.content === 'string') {
+        //     const paragraphs = post.content.split('\n\n');
+        //     return paragraphs.map((paragraph, index) => (
+        //         <p key={index}>{paragraph}</p>  //print in paragraph form
+        //     ));
+        // }
         if (typeof post.content === 'string') {
+            // Split paragraphs by \n\n and handle single \n as a line break
             const paragraphs = post.content.split('\n\n');
             return paragraphs.map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>  //print in paragraph form
+                <p key={index}>
+                    {paragraph.split('\n').map((line, j) => (
+                        <React.Fragment key={`${index}-${j}`}>
+                            {line}
+                            {j < paragraph.split('\n').length - 1 && <br />} {/* Line break for single \n */}
+                        </React.Fragment>
+                    ))}
+                </p>
             ));
         }
 

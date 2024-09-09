@@ -115,7 +115,6 @@ const PostList = ({ type }) => {
 
 
 
-
                             {/* TO REFACTOR! */}
 
                             {/* originally type p not div */}

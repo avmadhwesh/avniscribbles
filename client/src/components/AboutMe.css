@@ -14,7 +14,7 @@
     margin-bottom: 40px;
     opacity: 0;  
     transform: translateY(20px);  
-    transition: opacity 1s ease-out, transform 1s ease-out;  
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;  
 }
 
 .profile-picture-container {
@@ -48,8 +48,8 @@
 .bottom-panel {
     margin-top: 40px;
     opacity: 0;  
-    transform: translateY(20px);  
-    transition: opacity 1s ease-out, transform 1s ease-out;  
+    transform: translateY(10px);  
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;  
 }
 
 .bottom-panel p {

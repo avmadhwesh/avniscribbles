@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './PostList.css';  
 import TAGS from '../tags';  // import tags const
 
-const RANDOM_COLORS = ['#5C573E','#A5B452','#C8D96F','#C4F7A1','#9BA7C0','#545F66','#829399','#D0F4EA','#36453B','#596869','#C2C1A5','#A7B0CA','#E8C0917','#CB754B','#97B09B','#E9D4AC'];
+const RANDOM_COLORS = ['#545F66','#829399','#D0F4EA','#36453B','#596869','#C2C1A5','#A7B0CA','#E8C0917','#CB754B','#97B09B','#E9D4AC'];
 
 // FETCHING DEPLOYED ENVIRONMENT VAR
 const DEPLOYED = process.env.REACT_APP_DEPLOYED === 'true'; 

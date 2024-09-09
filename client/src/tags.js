@@ -9,7 +9,12 @@ const TAGS = {
     'linguistics' : { color: '#063970' },
     'poetry' : { color: '#21130d' },
     'short story' : { color: '#000000' },
-    'freewrite' : {color: 'BDC392'}
+    'freewrite' : {color: '#BDC392'},
+    'creative' : {color: '#5C573E'},
+    'short' : {color: '#A5B452'},
+    // 'old writing' : {color: '#C8D96F'}
+    'old writing' : {color: '#9BA7C0'}
+    
     //color inspos: jazz, art nouveau
 
 };

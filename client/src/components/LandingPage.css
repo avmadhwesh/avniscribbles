@@ -14,7 +14,12 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;  
+    height: 100vh; 
+        background: url('images/tailwind-stolen3.jpg') center center / cover,
+        url('images/lined-paper.png') center center / cover; 
+    background-blend-mode: overlay;
+    text-align: center;
+    position: relative;
     text-align: center;
 }
 
@@ -25,11 +30,13 @@ body {
     justify-content: center;
     align-items: center;
     flex-grow: 1; 
+    /* new */
+    z-index: 10; 
 }
 
 /* typewriter */
 h1 {
-    font-size: 500px;
+    font-size: 80px;
     font-weight: 1000;
     margin-bottom: 40px;
 }

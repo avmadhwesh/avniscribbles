@@ -15,6 +15,10 @@
     width: 100%;
     padding: 10px 20px;
     background-color: #f2f3f4; /* Dark background color */
+    /* background: url('images/tailwind-ex.svg') center center / cover, 
+    /* url('https://tailwindcss.com/_next/static/media/hero@75.b2469a49.jpg') center center / cover; */
+    /* url('images/pacificvisionfoundationaura.png') center center / cover;
+    background-blend-mode: overlay; */ 
 }
 
 .navbar-brand {

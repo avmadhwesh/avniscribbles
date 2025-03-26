@@ -1,24 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
+const mongoose = require('mongoose'); //added in debugging process
 
 // Fetch posts by type
 router.get('/:type', async (req, res) => {
     const { type } = req.params;
-    const isDeployed = process.env.DEPLOYED === 'true';  //deployment check
-
+    console.log('Fetching posts of type:', type);
+    
     try {
-        // filter out dev posts
-        const filter = isDeployed ? { type, dev: false } : { type };
-
-
-        const posts = await Post.find(filter).sort({ createdAt: -1 });  // newest first sort
-
-
-
-      //   const posts = await Post.find(filter);
+        const filter = { type };
+        console.log('Using filter:', filter);
+        const posts = await Post.find(filter).sort({ createdAt: -1 });
+        console.log('Database being used:', mongoose.connection.db.databaseName);
+        console.log('Number of posts found:', posts.length);
         res.status(200).json(posts);
     } catch (err) {
+        console.error('Error fetching posts:', err);
         res.status(500).json({ message: err.message });
     }
 });
@@ -52,6 +50,30 @@ router.get('/post/:id', async (req, res) => {
 //    console.log('DEPLOYED status:', isDeployed);  // Log the status to console for verification
 //    res.json({ deployedStatus: isDeployed });  // Return the value as JSON
 // });
+
+// Add this temporary route to check all posts
+router.get('/debug/all', async (req, res) => {
+    try {
+        const posts = await Post.find({});
+        res.json(posts);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// Debug route to see all posts regardless of type
+router.get('/debug/all-posts', async (req, res) => {
+    try {
+        const posts = await Post.find({});
+        console.log('All posts (ignoring type):', posts);
+        res.json({
+            count: posts.length,
+            posts: posts
+        });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
 
 module.exports = router;
 

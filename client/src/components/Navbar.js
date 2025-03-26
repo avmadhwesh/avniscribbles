@@ -23,7 +23,13 @@ const Navbar = () => {
                             <Link className="nav-link" to="/essays">Essays</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/creative">Creative Writing</Link>
+                            <Link className="nav-link" to="/creative">Creative</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/scribbles">Scribbles</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/reading-list">Readings</Link>
                         </li>
                     </ul>
                 </div>

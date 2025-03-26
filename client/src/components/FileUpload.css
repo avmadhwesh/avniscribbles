@@ -1,0 +1,38 @@
+.upload-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+.preview-container {
+    margin-top: 2rem;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+.preview-content {
+    margin-top: 1rem;
+    line-height: 1.6;
+}
+
+.error {
+    color: #dc3545;
+    margin-top: 0.5rem;
+}
+
+figure {
+    margin: 1rem 0;
+}
+
+figure img {
+    max-width: 100%;
+    height: auto;
+}
+
+figcaption {
+    text-align: center;
+    font-style: italic;
+    color: #666;
+    margin-top: 0.5rem;
+} 

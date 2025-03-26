@@ -89,31 +89,114 @@ const PostDetail = () => {
     if (!post) {
         return <div>Loading...</div>;  
     }
-    //render contents
-    const renderContent = (post) => {
+    //render contents----commented out 03/20/2025
+    // const renderContent = (post) => {
 
-        // Handling field fcontent (formatted content type object array)
-        if (Array.isArray(post.fcontent)) {
+    //     // Handling field fcontent (formatted content type object array)
+    //     if (Array.isArray(post.fcontent)) {
+    //         return post.fcontent.map((block, index) => {
+    //             if (block.type === 'paragraph') {
+    //             //     const paragraphs = block.text.split('\n\n'); //test
+    //             //     return paragraphs.map((paragraphs, i) => (
+    //             //         <p key={`${index}-${i}`}>{paragraphs}</p>  // para render
+    //             //     ));
+    //             // }
+    //             // Split paragraphs by \n\n and handle \n as a line break
+    //             const paragraphs = block.text.split('\n\n'); // Paragraphs
+    //             return paragraphs.map((paragraph, i) => (
+    //                 <p key={`${index}-${i}`}>
+    //                     {paragraph.split('\n').map((line, j) => (
+    //                         <React.Fragment key={`${index}-${i}-${j}`}>
+    //                             {line}
+    //                             {j < paragraph.split('\n').length - 1 && <br />} {/* Add line break for \n */}
+    //                         </React.Fragment>
+    //                     ))}
+    //                 </p>
+    //             ));
+    //         }
+    //             if (block.type === 'image' && getImage(block.url)) {
+    //                 return (
+    //                     <div key={index} className="post-image-container">
+    //                         <img src={getImage(block.url)} alt="Post Visual" className="post-image" />
+    //                         <p className="image-caption">{block.caption}</p>
+    //                     </div>
+    //                 );
+    //             }
+    //             if (block.type == 'embed-link' && block.link && block.text) {
+    //                 return (
+    //                     <span key={index}>
+    //                     <a href={block.link} target="_blank" rel="noopener noreferrer">
+    //                         {block.text}
+    //                     </a>
+    //                     </span>
+    //                 )
+                    
+    //             }
+    //             if (block.type == 'raw-text') {
+    //                 // return (
+    //                 //     <span key={index}>{block.text}</span>
+    //                 // );
+    //                 return (
+    //                     <span key={index}>
+    //                         {block.text.split('\n').map((line, j) => (
+    //                             <React.Fragment key={`${index}-${j}`}>
+    //                                 {line}
+    //                                 {j < block.text.split('\n').length - 1 && <br />} {/* Add line break for single \n */}
+    //                             </React.Fragment>
+    //                         ))}
+    //                     </span>
+    //                 );
+    //             }
+    //             if (block.type === 'ftext') {
+    //                 const styles = applyTextStyles(block.style);  // Apply styles based on the style field
+    //                 return (
+    //                     <span key={index} style={styles}>
+    //                         {block.text}
+    //                     </span>
+    //                 );
+    //             }
+    //             return null;  // Skip unsupported block types
+    //         });
+    //     }
+
+    //     // DEFAULT: handle field "content" (type string)
+    //     // if (typeof post.content === 'string') {
+    //     //     const paragraphs = post.content.split('\n\n');
+    //     //     return paragraphs.map((paragraph, index) => (
+    //     //         <p key={index}>{paragraph}</p>  //print in paragraph form
+    //     //     ));
+    //     // }
+    //     if (typeof post.content === 'string') {
+    //         // Split paragraphs by \n\n and handle single \n as a line break
+    //         const paragraphs = post.content.split('\n\n');
+    //         return paragraphs.map((paragraph, index) => (
+    //             <p key={index}>
+    //                 {paragraph.split('\n').map((line, j) => (
+    //                     <React.Fragment key={`${index}-${j}`}>
+    //                         {line}
+    //                         {j < paragraph.split('\n').length - 1 && <br />} {/* Line break for single \n */}
+    //                     </React.Fragment>
+    //                 ))}
+    //             </p>
+    //         ));
+    //     }
+
+    //     return null;  // in case no "content" nor "fcontent"
+    // };
+    const renderContent = (post) => {
+        console.log("Rendering content for:", post);
+    
+        if (!post) return <p>Loading...</p>;
+    
+        // ✅ Handle `fcontent` (formatted content objects)
+        if (Array.isArray(post.fcontent) && post.fcontent.length > 0) {
             return post.fcontent.map((block, index) => {
-                if (block.type === 'paragraph') {
-                //     const paragraphs = block.text.split('\n\n'); //test
-                //     return paragraphs.map((paragraphs, i) => (
-                //         <p key={`${index}-${i}`}>{paragraphs}</p>  // para render
-                //     ));
-                // }
-                // Split paragraphs by \n\n and handle \n as a line break
-                const paragraphs = block.text.split('\n\n'); // Paragraphs
-                return paragraphs.map((paragraph, i) => (
-                    <p key={`${index}-${i}`}>
-                        {paragraph.split('\n').map((line, j) => (
-                            <React.Fragment key={`${index}-${i}-${j}`}>
-                                {line}
-                                {j < paragraph.split('\n').length - 1 && <br />} {/* Add line break for \n */}
-                            </React.Fragment>
-                        ))}
-                    </p>
-                ));
-            }
+                if (block.type === 'paragraph') return <p key={index}>{block.text}</p>;
+                if (block.type === 'raw-text') return <span key={index}>{block.text}</span>;
+                if (block.type === 'ftext') {
+                    const styles = applyTextStyles(block.style);
+                    return <span key={index} style={styles}>{block.text}</span>;
+                }
                 if (block.type === 'image' && getImage(block.url)) {
                     return (
                         <div key={index} className="post-image-container">
@@ -122,77 +205,62 @@ const PostDetail = () => {
                         </div>
                     );
                 }
-                if (block.type == 'embed-link' && block.link && block.text) {
+                if (block.type === 'embed-link' && block.link && block.text) {
                     return (
                         <span key={index}>
-                        <a href={block.link} target="_blank" rel="noopener noreferrer">
-                            {block.text}
-                        </a>
-                        </span>
-                    )
-                    
-                }
-                if (block.type == 'raw-text') {
-                    // return (
-                    //     <span key={index}>{block.text}</span>
-                    // );
-                    return (
-                        <span key={index}>
-                            {block.text.split('\n').map((line, j) => (
-                                <React.Fragment key={`${index}-${j}`}>
-                                    {line}
-                                    {j < block.text.split('\n').length - 1 && <br />} {/* Add line break for single \n */}
-                                </React.Fragment>
-                            ))}
+                            <a href={block.link} target="_blank" rel="noopener noreferrer">
+                                {block.text}
+                            </a>
                         </span>
                     );
                 }
-                if (block.type === 'ftext') {
-                    const styles = applyTextStyles(block.style);  // Apply styles based on the style field
-                    return (
-                        <span key={index} style={styles}>
-                            {block.text}
-                        </span>
-                    );
-                }
-                return null;  // Skip unsupported block types
+                return null;
             });
         }
-
-        // DEFAULT: handle field "content" (type string)
-        // if (typeof post.content === 'string') {
-        //     const paragraphs = post.content.split('\n\n');
-        //     return paragraphs.map((paragraph, index) => (
-        //         <p key={index}>{paragraph}</p>  //print in paragraph form
-        //     ));
-        // }
+    
+        // ✅ Handle `content` when it's an **array of objects**
+        if (Array.isArray(post.content) && post.content.length > 0) {
+            console.log("Handling content as an array of objects:", post.content);
+            if (post.content.every(item => typeof item === 'string')) {
+                // 🚨 Fix case where `content` is stored as an array of single-character strings
+                return <p>{post.content.join('')}</p>;
+            }
+            return post.content.map((block, index) => {
+                if (block.type === 'paragraph') return <p key={index}>{block.text}</p>;
+                return null;
+            });
+        }
+    
+        // ✅ Handle `content` when it's a **string**
         if (typeof post.content === 'string') {
-            // Split paragraphs by \n\n and handle single \n as a line break
-            const paragraphs = post.content.split('\n\n');
-            return paragraphs.map((paragraph, index) => (
+            console.log("Handling content as a plain string:", post.content);
+            return post.content.split('\n\n').map((paragraph, index) => (
                 <p key={index}>
                     {paragraph.split('\n').map((line, j) => (
                         <React.Fragment key={`${index}-${j}`}>
                             {line}
-                            {j < paragraph.split('\n').length - 1 && <br />} {/* Line break for single \n */}
+                            {j < paragraph.split('\n').length - 1 && <br />}
                         </React.Fragment>
                     ))}
                 </p>
             ));
         }
-
-        return null;  // in case no "content" nor "fcontent"
+    
+        // ✅ If no valid content, show a fallback message
+        return <p>No content available for this post.</p>;
     };
-
+    
+    //image loading utility function this is a test tho
     const getImage = (imageName) => {
         try {
-            return require(`./images/${imageName}`);
+            return require(`./images/${imageName}`); // Ensure the correct path
         } catch (err) {
             console.error(`Image not found: ${imageName}`);
-            return null;
+            return null; // Avoid breaking the app
         }
     };
-
+    
+    
 
     const authorNotes = post.notes ? post.notes.split('\n\n') : [];  // author's notes splitter
     const firstLineOfNotes = authorNotes.length > 0 ? authorNotes[0] : '';

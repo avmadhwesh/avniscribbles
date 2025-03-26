@@ -1,0 +1,58 @@
+.reading-list-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+}
+
+.reading-list-container h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.reading-list-container h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin: 10px 0;
+    padding: 10px;
+
+}
+
+li strong {
+    font-size: 1.2em;
+}
+
+li p {
+    font-style: italic;
+    color: #555;
+}
+
+.reading-section {
+    margin-bottom: 40px;
+}
+
+
+.reading-section h4 {
+    /* margin-bottom: 40px; */
+    color: #464646;
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+
+.reading-section h2 {
+    /* margin-bottom: 40px; */
+    color: #464646;
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 1.5em;
+}

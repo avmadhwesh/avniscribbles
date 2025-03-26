@@ -21,6 +21,8 @@ const PostList = ({ type }) => {
                 return { title: 'Blogs and Memos', blurb: 'freeform brain dumps, thoughts, announcements.' };
             case 'creative':
                 return { title: 'Creative Works', blurb: 'short stories, poems, etc.' };
+            case 'scribbles':
+                return { title: 'Scribbles', blurb: 'random thoughts, ideas, and reflections.' };
             default:
                 return { title: '', blurb: '' };
         }
@@ -32,6 +34,7 @@ const PostList = ({ type }) => {
 
     // TO CHANGE WHEN DEPLOYED!
     useEffect(() => {
+        console.log('Fetching posts for type:', type);
         fetch(`http://localhost:5000/api/posts/${type}`)
             .then((response) => {
                 if (!response.ok) {
@@ -40,9 +43,9 @@ const PostList = ({ type }) => {
                 return response.json();
             })
             .then((data) => {
-                // if DEPLOYED is true, filter out posts marked as DEV
+                console.log('Received posts:', data);
                 const filteredPosts = DEPLOYED ? data.filter(post => !post.dev) : data;
-
+                console.log('Filtered posts:', filteredPosts);
                 setPosts(filteredPosts);
             })
             .catch((error) => {
@@ -117,30 +120,72 @@ const PostList = ({ type }) => {
 
                             {/* TO REFACTOR! */}
 
-                            {/* originally type p not div */}
+                            {/* this block commented out 03/20/25 */}
+
+                            {/* <p>
+                                {typeof post.content === 'string' && post.content.trim().length > 0
+                                    ? post.content.length > 150
+                                        ? post.content.slice(0, 150) + '...'
+                                        : post.content
+                                    : Array.isArray(post.content) && post.content.length > 0
+                                    ? (() => {
+                                        const paragraphBlock = post.content.find(block => block.type === 'paragraph');
+                                        return paragraphBlock?.text.length > 150
+                                            ? paragraphBlock.text.slice(0, 150) + '...'
+                                            : paragraphBlock?.text || "No content available...";
+                                    })()
+                                    : Array.isArray(post.fcontent) && post.fcontent.length > 0
+                                    ? (() => {
+                                        const paragraphBlock = post.fcontent.find(block => block.type === 'paragraph');
+                                        return paragraphBlock?.text.length > 150
+                                            ? paragraphBlock.text.slice(0, 150) + '...'
+                                            : paragraphBlock?.text || "No content available...";
+                                    })()
+                                    : "No content available..."}
+                            </p>
+                             */}
+
+
                             <p>
-                            {typeof post.content === 'string' && post.content.trim().length > 0
-                                ? post.content.length > 150
-                                ? post.content.slice(0, 150) + '...'
-                                : post.content
-                                : Array.isArray(post.fcontent) && post.fcontent.length > 0
-                                ? (() => {
-                                    const paragraphBlock = post.fcontent.find(block => block.type === 'paragraph');
-                                    return paragraphBlock?.text.length > 150
-                                    ? paragraphBlock.text.slice(0, 150) + '...'
-                                    : paragraphBlock?.text || "No content available...";
-                                })()
-                                : "No content available..."}
+                                {typeof post.content === 'string' && post.content.trim().length > 0
+                                    ? (() => {
+                                        const firstPeriodIndex = post.content.indexOf('.');
+                                        if (firstPeriodIndex !== -1 && firstPeriodIndex < 100) {
+                                            return post.content.slice(0, firstPeriodIndex + 1);
+                                        }
+                                        return post.content.length > 100
+                                            ? post.content.slice(0, 100) + '...'
+                                            : post.content;
+                                    })()
+                                    : Array.isArray(post.content) && post.content.length > 0
+                                    ? (() => {
+                                        const paragraphBlock = post.content.find(block => block.type === 'paragraph');
+                                        if (!paragraphBlock?.text) return "No content available...";
+                                        const firstPeriodIndex = paragraphBlock.text.indexOf('.');
+                                        if (firstPeriodIndex !== -1 && firstPeriodIndex < 100) {
+                                            return paragraphBlock.text.slice(0, firstPeriodIndex + 1);
+                                        }
+                                        return paragraphBlock.text.length > 100
+                                            ? paragraphBlock.text.slice(0, 100) + '...'
+                                            : paragraphBlock.text;
+                                    })()
+                                    : Array.isArray(post.fcontent) && post.fcontent.length > 0
+                                    ? (() => {
+                                        const paragraphBlock = post.fcontent.find(block => block.type === 'paragraph');
+                                        if (!paragraphBlock?.text) return "No content available...";
+                                        const firstPeriodIndex = paragraphBlock.text.indexOf('.');
+                                        if (firstPeriodIndex !== -1 && firstPeriodIndex < 100) {
+                                            return paragraphBlock.text.slice(0, firstPeriodIndex + 1);
+                                        }
+                                        return paragraphBlock.text.length > 100
+                                            ? paragraphBlock.text.slice(0, 100) + '...'
+                                            : paragraphBlock.text;
+                                    })()
+                                    : "No content available..."}
                             </p>
 
 
-                            {/* <p>
-                            {typeof post.content === 'string' && post.content.trim().length > 0
-                                ? post.content.slice(0, 150) + '...'
-                                : Array.isArray(post.fcontent) && post.fcontent.length > 0
-                                ? post.fcontent.find(block => block.type === 'paragraph')?.text.slice(0, 150) + '...'
-                                : "No content available..."}
-                            </p> */}
+
 
                             {/* display tags*/}
                             {Array.isArray(post.tags) && (

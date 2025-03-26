@@ -1,0 +1,31 @@
+{
+    "normal": [
+      {
+        "title": "Normal Book Title 1",
+        "authors": ["Author 1"],
+        "year": 2022,
+        "description": "A normal book description."
+      },
+      {
+        "title": "Normal Book Title 2",
+        "authors": ["Author 2"],
+        "year": 2020,
+        "description": "Another normal book description."
+      }
+    ],
+    "scholarly": [
+      {
+        "title": "Scholarly Paper Title 1",
+        "authors": ["Researcher 1", "Researcher 2"],
+        "year": 2023,
+        "description": "A scholarly paper on AI and technology."
+      },
+      {
+        "title": "Scholarly Paper Title 2",
+        "authors": ["Researcher 3"],
+        "year": 2021,
+        "description": "A research paper on biology."
+      }
+    ]
+  }
+  

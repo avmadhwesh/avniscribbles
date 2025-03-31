@@ -57,6 +57,12 @@ app.get('/', (req, res) => {
     res.send('avniscribbles api');
 });
 
+// Update the CORS configuration here
+app.use(cors({
+    origin: ['https://your-frontend-url.vercel.app', 'http://localhost:3000'],
+    credentials: true
+}));
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
